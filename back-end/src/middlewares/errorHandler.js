@@ -1,5 +1,6 @@
 const errors = [
-  { status: 400, message: '' },
+  { status: 404, message: 'User not found' },
+  { status: 409, message: 'User already exist' },
 ];
 
 const errorHandler = (error, _req, res, next) => {

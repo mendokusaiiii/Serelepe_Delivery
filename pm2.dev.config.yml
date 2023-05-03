@@ -2,7 +2,7 @@ apps:
 - name: delivery-app-back-end
   cwd: ./back-end
   script: npm
-  args: "start"
+  args: "run dev"
   exec_mode: fork
   max_restarts: 3
   max_memory_restart: 200M
