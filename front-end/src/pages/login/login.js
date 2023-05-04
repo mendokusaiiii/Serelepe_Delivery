@@ -27,15 +27,17 @@ function LoginPage() {
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const { data, status } = await fetchLogin({ email, password });
-    const statusCode = 404;
-    if (status === statusCode) {
+    const apiError = 404;
+
+    const dataResult = await fetchLogin({ email, password });
+
+    if (dataResult.status === apiError) {
       setInvalidLogin(true);
-      return setMessageError(data.message);
+      return setMessageError('Invalid Login');
     }
     setInvalidLogin(false);
-    saveLocal('user', data);
-    history.push('/');
+    saveLocal('user', dataResult.data);
+    history.push('/customer/products');
   };
 
   return (

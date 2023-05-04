@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function fetchCreatingUser(obj) {
   const instance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3001',
   });
   try {
     const result = await instance.post(

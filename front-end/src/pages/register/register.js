@@ -29,6 +29,7 @@ function RegisterPage() {
   const handleClick = async (event) => {
     event.preventDefault();
     const response = await fetchCreatingUser({ name, email, password });
+    console.log(response)
     const statusCode = 409;
     if (response.status === statusCode) {
       setIsThereAnUser(true);
