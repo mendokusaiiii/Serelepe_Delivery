@@ -1,9 +1,13 @@
 const registerService = require('../services/registerService');
 
-const userRegister = async (req, res) => {
+const userRegister = async (req, res, next) => {
   const register = req.body;
-  const newRegister = await registerService.userRegister(register);
-  return res.status(201).json(newRegister);
+  try {
+    const newRegister = await registerService.userRegister(register);
+    return res.status(201).json(newRegister);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {

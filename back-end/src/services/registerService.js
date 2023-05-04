@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const { User } = require('../database/models');
 
 const userRegister = async (data) => {
-  const { name, email, password } = data;
+  const { name, email, password, role = 'customer' } = data;
 
   const user = await User.findOne({ where: { 
     [Op.or]: [
@@ -19,9 +19,10 @@ const userRegister = async (data) => {
     name,
     email,
     password: encryptedPassword,
+    role,
   });
 
-  return { name, email };
+  return { name, email, role };
 };
 
 module.exports = {
