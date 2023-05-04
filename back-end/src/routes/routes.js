@@ -5,6 +5,6 @@ const registerRoute = require('./registerRoutes');
 const routes = Router();
 
 routes.use('/login', loginRoute);
-routes.use('/register', registerRoute);
+routes.use('/users', registerRoute);
 
 module.exports = routes;
