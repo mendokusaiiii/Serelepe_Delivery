@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-async function fetchLogin(obj) {
+async function fetchProduct() {
   const instance = axios.create({
     baseURL: 'http://localhost:3001',
   });
   try {
-    const result = await instance.post('/login', obj);
+    const result = await instance.get('/products');
     return result;
   } catch (error) {
     return error.response;
   }
 }
 
-export default fetchLogin;
+export default fetchProduct;

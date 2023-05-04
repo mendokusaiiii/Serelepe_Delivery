@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchLogin from '../../api/fetchLogin';
+import { saveLocal } from '../../helpers/localStorage';
 
 function LoginPage() {
   const history = useHistory();
@@ -33,7 +34,7 @@ function LoginPage() {
       return setMessageError(data.message);
     }
     setInvalidLogin(false);
-    savingLocal('user', data);
+    saveLocal('user', data);
     history.push('/');
   };
 

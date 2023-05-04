@@ -1,23 +1,13 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function HomePage() {
   const history = useHistory();
 
-  return (
-    <>
-      <h1>Home Page</h1>
-      <button
-        type="button"
-        onClick={
-          () => history.push('/login')
-        }
-      >
-        Go to Login Page
-
-      </button>
-    </>
-  );
+  useEffect(() => {
+    history.push('/login');
+  });
+  return ('');
 }
 
 export default HomePage;
