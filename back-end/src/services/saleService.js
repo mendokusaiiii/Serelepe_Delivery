@@ -41,7 +41,13 @@ const getAllSales = async () => Sale.findAll({
    'deliveryAddress'],
 });
 
+const updateSale = async (id, status) => {
+  const result = await Sale.update({ status }, { where: { id } });
+  return result;
+};
+
 module.exports = {
   createSale,
   getAllSales,
+  updateSale,
 };
