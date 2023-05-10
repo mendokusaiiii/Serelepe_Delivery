@@ -6,7 +6,7 @@ const errors = require('../middlewares/errorHandler');
 
 const app = express();
 app.use(cors());
-const imagesPath = path.resolve('images');
+const imagesPath = path.resolve(__dirname, '../../public/images');
 
 app.use(express.json());
 app.use('/images', express.static(imagesPath));
