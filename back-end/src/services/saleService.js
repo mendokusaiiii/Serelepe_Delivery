@@ -4,7 +4,7 @@ const createSalesProdutcs = async (saleId, cart) => {
   const newSalesProducts = cart.map((item) => {
     const newRegister = SalesProduct.create({
       saleId,
-      productId: item.id,
+      productId: item.productId,
       quantity: item.quantity,
     });
 
