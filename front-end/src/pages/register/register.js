@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchCreatingUser from '../../api/fetchCreatingUser';
+import { saveLocal } from '../../helpers/localStorage';
 
 function RegisterPage() {
   const history = useHistory();
@@ -29,13 +30,16 @@ function RegisterPage() {
   const handleClick = async (event) => {
     event.preventDefault();
     const response = await fetchCreatingUser({ name, email, password });
-    console.log(response);
+    console.log(response.data);
     const statusCode = 409;
     if (response.status === statusCode) {
       setIsThereAnUser(true);
       return setMessageError(response.data.message);
     }
     setIsThereAnUser(false);
+    saveLocal('user', { email: response.data.email,
+      name: response.data.name,
+      token: response.data.createdToken });
     history.push('/customer/products');
   };
 

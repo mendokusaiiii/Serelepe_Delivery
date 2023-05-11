@@ -36,7 +36,7 @@ function LoginPage() {
       return setMessageError('Invalid Login');
     }
     setInvalidLogin(false);
-    saveLocal('user', dataResult.data);
+    saveLocal('user', { ...dataResult.data });
     history.push('/customer/products');
   };
 

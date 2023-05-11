@@ -1,29 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useContext } from 'react';
-import stateGlobalContext from '../context/stateGlobalContext';
+import React, { useEffect, useState } from 'react';
 
-function Card({ product }) {
-  const { name, urlImage, id, price } = product;
-  const { addAndRemoveTotal } = useContext(stateGlobalContext);
+function Card({ name, urlImage, id, price, incrementOrDecrement,
+  quantity, inputIncrementOrDecrement }) {
   const [counter, setCounter] = useState(0);
+  const [disabled, setDisabled] = useState(quantity === 0);
 
   useEffect(() => {
-    addAndRemoveTotal({ ...product, counter });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counter]);
-
-  function increment() {
-    setCounter(counter + 1);
-  }
-  function decrement() {
-    if (counter <= 0) return 0;
-    setCounter(counter - 1);
-  }
-  function handleChange(event) {
-    if (Number(event.target.value) >= 0) {
-      setCounter(Number(event.target.value));
-    }
-  }
+    setCounter(quantity);
+    setDisabled(quantity === 0);
+  }, [quantity]);
 
   return (
     <div className="card-product">
@@ -41,26 +27,35 @@ function Card({ product }) {
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        { `R$ ${price.toString().replace('.', ',')}` }
+        { `${price.toString().replace('.', ',')}` }
       </p>
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="submit"
-        onClick={ increment }
+        onClick={ () => {
+          incrementOrDecrement({ id, name, price, quantity: 1 });
+          setCounter(counter + 1);
+        } }
       >
         +
       </button>
       <input
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
-        onChange={ handleChange }
-        min={ 0 }
-        value={ Number(counter) }
+        onChange={ (e) => {
+          inputIncrementOrDecrement({ id, name, price, quantity: +e.target.value });
+          setCounter(+e.target.value);
+        } }
+        value={ counter }
       />
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="submit"
-        onClick={ decrement }
+        disabled={ disabled }
+        onClick={ () => {
+          incrementOrDecrement({ id, name, price, quantity: -1 });
+          if (counter > 0) setCounter(counter - 1);
+        } }
       >
         -
       </button>
@@ -68,12 +63,16 @@ function Card({ product }) {
   );
 }
 Card.propTypes = {
-  product: PropTypes.shape({
-    name: PropTypes.string,
-    urlImage: PropTypes.string,
-    price: PropTypes.string,
-    id: PropTypes.number,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  urlImage: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  incrementOrDecrement: PropTypes.func.isRequired,
+  inputIncrementOrDecrement: PropTypes.func.isRequired,
+  price: PropTypes.shape({
+    replace: PropTypes.func,
   }).isRequired,
+
 };
 
 export default Card;

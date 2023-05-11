@@ -13,24 +13,24 @@ function StateGlobalProvider(props) {
   const { children } = props;
 
   const addAndRemoveTotal = (obj) => {
-    const isThereSomething = total.some(({ id }) => obj.id === id);
-    if (!isThereSomething && obj.counter > 0) return setTotalPurchased([...total, obj]);
-    const withNoProduct = total.filter(({ id }) => id !== obj.id);
+    const isThereSomething = totalPurchased.some(({ id }) => obj.id === id);
+    if (!isThereSomething && obj.counter > 0) {
+      return setTotalPurchased(
+        [...totalPurchased, obj],
+      );
+    }
+    const withNoProduct = totalPurchased.filter(({ id }) => id !== obj.id);
     if (obj.counter === 0) return setTotalPurchased([...withNoProduct]);
     return setTotalPurchased([...withNoProduct, obj]);
   };
 
-  const calculator = () => {
-    const result = total.reduce((acc, curr) => {
+  useEffect(() => {
+    const result = totalPurchased.reduce((acc, curr) => {
       acc += (curr.counter * Number(curr.price));
       return acc;
     }, 0);
-    return result.toFixed(2);
-  };
 
-  useEffect(() => {
-    setTotal(calculator());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setTotal(result.toFixed(2));
   }, [totalPurchased]);
 
   const value = {
