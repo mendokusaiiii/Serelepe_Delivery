@@ -28,6 +28,18 @@ const userRegister = async (data) => {
   return { name, email, role, createdToken };
 };
 
+const getSellers = async () => {
+  const sellers = await User.findAll({ where: { role: 'seller' } });
+  const sellersInfo = sellers.reduce((acc, curr) => {
+    const { name, id } = curr.dataValues;
+
+    return [...acc, { id, name }];
+  }, []);
+
+  return sellersInfo;
+};
+
 module.exports = {
   userRegister,
+  getSellers,
 };
