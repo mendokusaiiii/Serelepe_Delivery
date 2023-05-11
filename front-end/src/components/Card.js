@@ -42,6 +42,7 @@ function Card({ name, urlImage, id, price, incrementOrDecrement,
       <input
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
+        min={ 0 }
         onChange={ (e) => {
           inputIncrementOrDecrement({ id, name, price, quantity: +e.target.value });
           setCounter(+e.target.value);

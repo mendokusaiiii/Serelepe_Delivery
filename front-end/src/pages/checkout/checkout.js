@@ -5,10 +5,13 @@ import Header from '../../components/Header';
 import stateGlobalContext from '../../context/stateGlobalContext';
 import { readLocal, saveLocal } from '../../helpers/localStorage';
 import { sumItemsValue } from '../../helpers/cartFunctions';
+import fetchSellers from '../../api/fetchSellers';
 
 function CheckoutPage() {
   const { setMyArray, myArray } = useContext(stateGlobalContext);
   const [arrayLocal, setArrayLocal] = useState(myArray);
+  const [sellers, setSellers] = useState([]);
+  const [selectedSeller, setSelectedSeller] = useState(1);
   const [checkoutAddress, setCheckoutAddress] = useState('');
   const [total, setTotal] = useState(sumItemsValue(arrayLocal));
   const [addressNumberCheckout, setAddressNumberCheckout] = useState('');
@@ -18,6 +21,14 @@ function CheckoutPage() {
     setArrayLocal(readLocal('cartItems'));
     setMyArray(readLocal('cartItems'));
   }, [setMyArray]);
+
+  useEffect(() => {
+    async function getSellers() {
+      setSellers(await fetchSellers());
+      console.log(await fetchSellers());
+    }
+    getSellers();
+  }, []);
 
   const deleteItem = (id) => {
     const item = myArray.filter((product) => +product.id !== +id);
@@ -39,18 +50,21 @@ function CheckoutPage() {
 
   async function handleClick() {
     const sales = {
-      sellerId: 3,
       totalPrice: total,
+      sellerId: selectedSeller,
       deliveryAddress: checkoutAddress,
       deliveryNumber: addressNumberCheckout,
     };
 
-    const products = myArray.map((item) => ({
-      productId: item.id, quantity: item.counter,
+    const cartItems = myArray.map((item) => ({
+      productId: item.id, quantity: item.quantity,
     }));
-    const token = readLocal('user');
-    const { data } = await fetchSales(token.token, { sales, products });
-    history.push(`/customer/orders/${data.id}`);
+    const user = readLocal('user');
+    const { data } = await fetchSales(user.token, { cartItems,
+      ...sales,
+      userEmail: user.email });
+    console.log(data);
+    history.push(`/customer/orders/${data.saleId}`);
   }
 
   return (
@@ -108,15 +122,19 @@ function CheckoutPage() {
       </span>
       <div>
         <label htmlFor="sellerSelectCheckout">
-          Resposible sellerId
+          {selectedSeller}
           <br />
           <select
             id="sellerSelect"
             data-testid="customer_checkout__select-seller"
+            onChange={ (e) => setSelectedSeller(e.target.value) }
           >
-            <option>
-              Cliente Zé Birita
-            </option>
+            {sellers.map((seller) => (
+              <option value={ seller.id } key={ seller.name }>
+                {seller.name}
+              </option>
+            ))}
+
           </select>
         </label>
         <br />
