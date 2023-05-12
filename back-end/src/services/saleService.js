@@ -1,4 +1,4 @@
-const { Sale, SalesProduct, User } = require('../database/models');
+const { Sale, SalesProduct, User, Product } = require('../database/models');
 
 const createSalesProdutcs = async (saleId, cart) => {
   const newSalesProducts = cart.map((item) => {
@@ -46,8 +46,28 @@ const updateSale = async (id, status) => {
   return result;
 };
 
+const detailedSale = async (saleId) => {
+  const saleDatails = await SalesProduct.findAll({
+    where: { saleId },
+    include: [
+      {
+        model: Product,
+        as: 'product',
+        attributes: ['id', 'name', 'price'],
+      },
+      {
+        model: Sale,
+        as: 'sale',
+        attributes: { exclude: ['id'] },
+      },
+    ],
+  });
+  return saleDatails;
+};
+
 module.exports = {
   createSale,
   getAllSales,
   updateSale,
+  detailedSale,
 };
