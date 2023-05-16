@@ -6,7 +6,11 @@ import HomePage from './pages/home/home';
 import RegisterPage from './pages/register/register';
 import ProductsPage from './pages/products/products';
 import CheckoutPage from './pages/checkout/checkout';
+import OrdersPage from './pages/ordersCostumer/orders';
+import OrderDetails from './pages/ordersCostumer/orderDetails';
 import stateGlobalContext from './context/stateGlobalContext';
+import OrderDetailSeller from './pages/orderSeller/orderDetailSeller';
+import OrderSeller from './pages/orderSeller/orderSeller';
 
 function App() {
   const [myArray, setMyArray] = useState([]);
@@ -18,6 +22,10 @@ function App() {
         <Route exact path="/login" component={ LoginPage } />
         <Route exact path="/customer/products" component={ ProductsPage } />
         <Route exact path="/customer/checkout" component={ CheckoutPage } />
+        <Route exact path="/customer/orders/" component={ OrdersPage } />
+        <Route exact path="/customer/orders/:id" component={ OrderDetails } />
+        <Route exact path="/seller/orders/" component={ OrderSeller } />
+        <Route exact path="/seller/orders/:id" component={ OrderDetailSeller } />
         <Route exact path="/register" component={ RegisterPage } />
       </Switch>
     </stateGlobalContext.Provider>
