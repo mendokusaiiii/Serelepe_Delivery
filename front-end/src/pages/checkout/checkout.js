@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchSales from '../../api/fetchSales';
-import Header from '../../components/Header';
+import Header from '../../components/Costumer/Header';
 import stateGlobalContext from '../../context/stateGlobalContext';
 import { readLocal, saveLocal } from '../../helpers/localStorage';
 import { sumItemsValue } from '../../helpers/cartFunctions';
@@ -11,7 +11,7 @@ function CheckoutPage() {
   const { setMyArray, myArray } = useContext(stateGlobalContext);
   const [arrayLocal, setArrayLocal] = useState(myArray);
   const [sellers, setSellers] = useState([]);
-  const [selectedSeller, setSelectedSeller] = useState(1);
+  const [selectedSeller, setSelectedSeller] = useState(2);
   const [checkoutAddress, setCheckoutAddress] = useState('');
   const [total, setTotal] = useState(sumItemsValue(arrayLocal));
   const [addressNumberCheckout, setAddressNumberCheckout] = useState('');

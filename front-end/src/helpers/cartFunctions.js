@@ -25,4 +25,14 @@ function sumItemsValue(items) {
   }, 0);
   return total;
 }
-export { sumItems, sumItemsValue };
+
+const dateConverter = (d) => {
+  const currentDate = new Date(d);
+  const sliceNumber = -2;
+  const day = (`0${currentDate.getDate()}`).slice(sliceNumber);
+  const month = (`0${currentDate.getMonth() + 1}`).slice(sliceNumber);
+  const result = `${day}/${month}/${currentDate.getFullYear()}`;
+  return result;
+};
+
+export { sumItems, sumItemsValue, dateConverter };
