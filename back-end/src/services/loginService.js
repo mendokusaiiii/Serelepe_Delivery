@@ -9,7 +9,9 @@ const login = async (email, loginPassword) => {
   if (md5(loginPassword) !== userLogin.password) throw new Error('Incorrect password');
 
   const { password, id, ...userInfo } = userLogin.dataValues;
-  return { ...userInfo, token: createToken(userInfo.password, userInfo.email) };
+  return { ...userInfo,
+    token: createToken({
+     password: userInfo.password, email: userInfo.email, role: userInfo.role }) };
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 const { Sale, SalesProduct, User, Product } = require('../database/models');
 
-const createSalesProdutcs = async (saleId, cart) => {
-  const newSalesProducts = cart.map((item) => {
+const createSalesProdutcs = async (saleId, cartItems) => {
+  const newSalesProducts = cartItems.map((item) => {
     const newRegister = SalesProduct.create({
       saleId,
       productId: item.productId,
@@ -14,7 +14,7 @@ const createSalesProdutcs = async (saleId, cart) => {
 };
 
 const createSale = async (data) => {
-  const { cart, totalPrice, sellerId, deliveryAddress, deliveryNumber, userEmail } = data;
+  const { cartItems, totalPrice, sellerId, deliveryAddress, deliveryNumber, userEmail } = data;
 
   const getUser = await User.findOne({ where: { email: userEmail } });
 
@@ -27,7 +27,7 @@ const createSale = async (data) => {
     status: 'Pendente',
   });
   
-  await createSalesProdutcs(newSale.id, cart);
+  await createSalesProdutcs(newSale.id, cartItems);
 
   return newSale.id;
 };
@@ -65,9 +65,29 @@ const detailedSale = async (saleId) => {
   return saleDatails;
 };
 
+const salesByRoleId = async (id, role) => {
+  const saleDetails = await SalesProduct.findAll({
+    include: [
+      {
+        model: Product,
+        as: 'product',
+        attributes: ['id', 'name', 'price'],
+      },
+      {
+        model: Sale,
+        as: 'sale',
+        where: { [role]: id },
+        attributes: { exclude: ['id'] },
+      },
+    ],
+  });
+  return saleDetails;
+};
+
 module.exports = {
   createSale,
   getAllSales,
   updateSale,
   detailedSale,
+  salesByRoleId,
 };

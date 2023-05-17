@@ -19,28 +19,7 @@ const getSellers = async (_req, res, next) => {
   }
 };
 
-const getAllUsers = async (_req, res, next) => {
-  try {
-    const users = await registerService.getAllUsers();
-    return res.status(200).json(users);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const deleteUser = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    await registerService.deleteUser(id);
-    return res.status(201).end();
-  } catch (error) {
-    next(error);
-  }
-};
-
 module.exports = {
   userRegister,
   getSellers,
-  getAllUsers,
-  deleteUser,
 };
