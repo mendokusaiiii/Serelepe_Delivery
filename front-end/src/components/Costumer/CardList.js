@@ -14,7 +14,7 @@ function CardList() {
   useEffect(() => {
     const localStorageCartItems = readLocal('cartItems');
     if (localStorageCartItems !== null) {
-      setMyArray(sumItems(localStorageCartItems));
+      setMyArray(localStorageCartItems);
       setCarItensLocal(localStorageCartItems);
     }
     const gettingProducts = async () => {

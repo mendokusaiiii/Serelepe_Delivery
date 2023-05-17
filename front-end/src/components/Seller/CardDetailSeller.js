@@ -6,11 +6,11 @@ import fetchSalesUpdatingStatus from '../../api/fetchSalesUpdatingStatus';
 
 function OrderDetailSeller() {
   const params = useParams();
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [order, setOrder] = useState([]);
-  // const [disabledPreparative, setDisabledPreparative] = useState(false);
-  // const [disabledDelivery, setDisabledDelivery] = useState(true);
+  const [disabledPreparative, setDisabledPreparative] = useState(false);
+  const [disabledDelivery, setDisabledDelivery] = useState(true);
   const [status, setStatus] = useState('');
 
   const addingZero = (num) => {
@@ -39,43 +39,50 @@ function OrderDetailSeller() {
     return `R$ ${brlCurrency}`;
   };
 
-  // const disabledButton = (status) => {
-  //   if (status === 'Preparando') {
-  //     setDisabledPreparative(false);
-  //     return setDisabledDelivery(true);
-  //   }
-  //   setDisabledPreparative(true);
-  //   setDisabledDelivery(true);
-  // };
+  const disabledButton = (currentStatus) => {
+    if (currentStatus === 'Preparando') {
+      setDisabledPreparative(true);
+      return setDisabledDelivery(false);
+    }
+    if (currentStatus === 'Pendente') {
+      setDisabledPreparative(false);
+      return setDisabledDelivery(true);
+    }
+    setDisabledPreparative(true);
+    setDisabledDelivery(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = readLocal('user');
-      const { data } = await fetchCardDetails(user.token, params.id);
+      try {
+        const user = readLocal('user');
+        const { data } = await fetchCardDetails(user.token, params.id);
 
-      setOrder(data);
-      // disabledButton(data[0].sale.status);
-      setTotalPrice(data[0].sale.totalPrice);
-      setStatus(data[0].sale.status);
-      setDate(data[0].sale.saleDate);
+        setOrder(data);
+        disabledButton(data[0].sale.status);
+        setTotalPrice(data[0].sale.totalPrice);
+        setStatus(data[0].sale.status);
+        setDate(data[0].sale.saleDate);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
   }, [params.id]);
 
   const preparingDelivery = async () => {
-    setLoading(true);
     setDisabledPreparative(true);
     setDisabledDelivery(false);
     const user = readLocal('user');
     await fetchSalesUpdatingStatus(user.token, params.id, { status: 'Preparando' });
+    setStatus('Preparando');
   };
 
   const outToDelivery = async () => {
-    setLoading(true);
     setDisabledDelivery(true);
     const user = readLocal('user');
-    await fetchSalesUpdatingStatus(user.token, params.id, { status: 'Em trânsito' });
-    setLoading(false);
+    await fetchSalesUpdatingStatus(user.token, params.id, { status: 'Em Trânsito' });
+    setStatus('Em Trânsito');
   };
 
   return (
@@ -96,13 +103,11 @@ function OrderDetailSeller() {
       <p
         data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
-        Status:
-        {' '}
         { status }
       </p>
       <button
         data-testid="seller_order_details__button-preparing-check"
-        disabled={ false }
+        disabled={ disabledPreparative }
         onClick={ preparingDelivery }
         type="button"
       >
@@ -110,7 +115,7 @@ function OrderDetailSeller() {
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
-        disabled
+        disabled={ disabledDelivery }
         onClick={ outToDelivery }
         type="button"
       >

@@ -12,7 +12,7 @@ function ShoppingCartTotal() {
   const localCart = readLocal('cartValue');
 
   useEffect(() => {
-    if (myArray.length > 0 && readLocal('cartValue')) {
+    if (readLocal('cartValue')) {
       setTotal(readLocal('cartValue'));
       setDisabled(false);
     }

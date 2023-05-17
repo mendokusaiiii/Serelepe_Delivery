@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { readLocal } from '../../helpers/localStorage';
 import fetchCardDetails from '../../api/fetchCardDetail';
-import fetchChangeStatus from '../../api/fetchChangeStatus';
 import fetchSellers from '../../api/fetchSellers';
+import fetchSalesUpdatingStatus from '../../api/fetchSalesUpdatingStatus';
 
 function CardDetails() {
   const params = useParams();
@@ -12,7 +12,7 @@ function CardDetails() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [date, setDate] = useState([]);
   const [status, setStatus] = useState('');
-  const [disabled, setDisabled] = useState('');
+  const [disabled, setDisable] = useState(true);
 
   const addingZero = (num) => {
     let zeroPlusNumber = String(num);
@@ -40,6 +40,7 @@ function CardDetails() {
     const brlCurrency = currency.toString().replace('.', ',');
     return `R$ ${brlCurrency}`;
   };
+
   const dataTestidStatus = 'element-order-details-label-delivery-status';
   const dataTestidDate = 'customer_order_details__element-order-details-label-order-date';
   const saleTestid = 'customer_order_details__element-order-details-label-order-id';
@@ -80,10 +81,12 @@ function CardDetails() {
 
   const fetchStatus = async () => {
     const user = readLocal('user');
-    await fetchChangeStatus(user.token, params.id);
     const { data } = await fetchCardDetails(user.token, params.id);
-    setOrders(data);
     setStatus(data[0].sale.status);
+    await fetchSalesUpdatingStatus(user.token, params.id, { status: 'Entregue' });
+    setStatus('Preparando');
+    setOrders(data);
+    setDisable(true);
   };
 
   useEffect(() => {
@@ -95,16 +98,16 @@ function CardDetails() {
       if (data.length > 0) {
         setTotalPrice(priceConverter(data[0].sale.totalPrice));
         setStatus(data[0].sale.status);
+        if (data[0].sale.status === 'Em Trânsito') {
+          setDisable(false);
+        }
         setDate(dateConverter(data[0].sale.saleDate));
         setSeller(allSellers.find((s) => s.id === data[0].sale.sellerId).name);
       }
     };
-    if (status === 'Entregue') {
-      setDisabled('[disabled]');
-      console.log(disabled);
-    }
+
     fetchData();
-  }, [params.id, status, disabled]);
+  }, [params.id, status]);
 
   const renderingProducts = () => {
     if (orders.length !== 0 || orders !== undefined) {
@@ -144,8 +147,6 @@ function CardDetails() {
           {date}
         </h1>
         <h1 data-testid={ `customer_order_details__${dataTestidStatus}` }>
-          Status:
-          {' '}
           {status}
         </h1>
         <h1 data-testid={ totalPriceTestId }>
@@ -155,7 +156,7 @@ function CardDetails() {
         <button
           onClick={ fetchStatus }
           type="button"
-          disabled
+          disabled={ disabled }
           data-testid="customer_order_details__button-delivery-check"
         >
           Change to Delivered

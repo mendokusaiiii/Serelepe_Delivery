@@ -11,10 +11,22 @@ import OrderDetails from './pages/ordersCostumer/orderDetails';
 import stateGlobalContext from './context/stateGlobalContext';
 import OrderDetailSeller from './pages/orderSeller/orderDetailSeller';
 import OrderSeller from './pages/orderSeller/orderSeller';
+import Admin from './pages/admin/admin';
 
 function App() {
   const [myArray, setMyArray] = useState([]);
-  const stateValue = useMemo(() => ({ myArray, setMyArray }), [myArray, setMyArray]);
+  const [sellerStatus, setSellerStatus] = useState([]);
+
+  const stateValue = useMemo(() => ({ myArray,
+    setMyArray,
+    sellerStatus,
+    setSellerStatus }), [
+    myArray,
+    setMyArray,
+    sellerStatus,
+    setSellerStatus,
+  ]);
+
   return (
     <stateGlobalContext.Provider value={ stateValue }>
       <Switch>
@@ -27,6 +39,7 @@ function App() {
         <Route exact path="/seller/orders/" component={ OrderSeller } />
         <Route exact path="/seller/orders/:id" component={ OrderDetailSeller } />
         <Route exact path="/register" component={ RegisterPage } />
+        <Route exact path="/admin/manage" component={ Admin } />
       </Switch>
     </stateGlobalContext.Provider>
   );

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { readLocal } from '../../helpers/localStorage';
 import fetchGetUserId from '../../api/fetchGetUserId';
 import fetchSalesByRoleId from '../../api/fetchGetSalesByRoleId';
 import { dateConverter } from '../../helpers/cartFunctions';
+import stateGlobalContext from '../../context/stateGlobalContext';
 
 function CardOrder() {
   const [orders, setOrders] = useState([]);
-
+  const { sellerStatus, setSellerStatus } = useContext(stateGlobalContext);
   const addingZero = (num) => {
     let zeroPlusNumber = String(num);
     let counter = zeroPlusNumber.length;
@@ -109,6 +110,10 @@ function CardOrder() {
           (acc, product) => acc + product.price * product.quantity,
           0,
         );
+        setSellerStatus(sellerStatus, { saleId: order.id,
+          value: total.toFixed(2),
+          date: dateConverter(order.saleDate),
+          status: order.status });
         return card({
           saleId: order.id,
           value: total.toFixed(2),

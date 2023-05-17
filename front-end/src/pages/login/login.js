@@ -44,6 +44,9 @@ function LoginPage() {
     if (readLocal('user').role === 'seller') {
       history.push('/seller/orders');
     }
+    if (readLocal('user').role === 'administrator') {
+      history.push('/admin/manage');
+    }
   };
 
   useEffect(() => {
@@ -53,6 +56,9 @@ function LoginPage() {
       }
       if (readLocal('user').role === 'seller') {
         history.push('/seller/orders');
+      }
+      if (readLocal('user').role === 'administrator') {
+        history.push('/admin/manage');
       }
     }
   }, [history]);
