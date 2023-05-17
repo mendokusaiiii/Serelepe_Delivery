@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-async function fetchCreatingUser(obj) {
+async function fetchCreatingUser(token, obj) {
   const instance = axios.create({
     baseURL: 'http://localhost:3001',
   });
   try {
     const result = await instance.post(
-      '/users',
+      '/admin',
       obj,
+      { headers: { Authorization: token } },
     );
     return result;
   } catch (error) {

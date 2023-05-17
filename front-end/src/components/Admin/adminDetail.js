@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import fetchGetAllUsers from '../../api/fetchGetAllUsers';
 import { readLocal } from '../../helpers/localStorage';
 import fetchDeleteUser from '../../api/fetchDeleteUser';
+import stateGlobalContext from '../../context/stateGlobalContext';
 
 function AdminDetail() {
-  const [allUsers, setAllUsers] = useState([]);
-
+  const { arrayUsers, setArrayUsers } = useContext(stateGlobalContext);
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const user = readLocal('user');
       const result = await fetchGetAllUsers(user.token);
-      setAllUsers(result.data);
-    }
+      console.log(result);
+      setArrayUsers(result.data);
+    };
     fetchData();
-  }, []);
+  }, [setArrayUsers]);
 
   const deleteUser = async (id) => {
     const user = readLocal('user');
     const userToBeDeleted = await fetchDeleteUser(user.token, id);
     const result = await fetchGetAllUsers(user.token);
-    setAllUsers(result.data);
+    setArrayUsers(result.data);
     return userToBeDeleted;
   };
   return (
@@ -34,19 +35,19 @@ function AdminDetail() {
             <th>Type</th>
             <th>Delete Item</th>
           </tr>
-          { allUsers && allUsers.map((item, index) => {
+          { arrayUsers && arrayUsers.map((item, index) => {
             const itemNumber = `admin_manage__element-user-table-item-number-${index}`;
             const personName = `admin_manage__element-user-table-name-${index}`;
             const email = `admin_manage__element-user-table-email-${index}`;
             const role = `admin_manage__element-user-table-role-${index}`;
-            const deleteItem = `admin_manage_element-user-table-remove-${index}`;
+            const deleteItem = `admin_manage__element-user-table-remove-${index}`;
             return (
               <tr key={ item.id }>
                 <td data-testid={ itemNumber }>{ index + 1 }</td>
                 <td data-testid={ personName }>{ item.name }</td>
                 <td data-testid={ email }>{item.email }</td>
                 <td data-testid={ role }>{ item.role }</td>
-                <td data-tesid={ deleteItem }>
+                <td data-testid={ deleteItem }>
                   <button
                     type="button"
                     onClick={ () => deleteUser(item.id) }

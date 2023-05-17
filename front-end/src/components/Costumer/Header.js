@@ -6,14 +6,8 @@ function Header() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    // const decode = async (key) => {
-    //   const userInfo = await fetchToken(key);
-    //   setUser(userInfo);
-    // };
     const deliveryApp = readLocal('user');
     setUser(deliveryApp);
-    console.log(deliveryApp);
-    // decode(deliveryApp.token);
   }, []);
 
   return (

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-async function fetchGetAllUsers() {
+async function fetchGetAllUsers(token) {
   const instance = axios.create({
     baseURL: 'http://localhost:3001',
   });
   try {
     const result = await instance.get('/admin', {
-      // headers: { Authorization: token },
+      headers: { Authorization: token },
     });
     return result;
   } catch (error) {

@@ -6,7 +6,7 @@ async function fetchDeleteUser(token, id) {
   });
   try {
     const result = await instance.delete(`/admin/${id}`, {
-      // headers: { Authorization: token },
+      headers: { Authorization: token },
     });
     return result;
   } catch (error) {
