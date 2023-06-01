@@ -1,0 +1,63 @@
+/* stylelint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.card-product {
+
+    width: 250px;
+    height: 260px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-product p {
+    font-family: 'Secular One', sans-serif;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.card-product img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 16px;
+}
+
+.card-product button {
+    background-color: #eb984e;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.card-product button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.card-product input {
+    width: 40px;
+    padding: 4px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.card-product button,
+.card-product input {
+    margin: 4px;
+}
+
+.card-product button:first-child {
+    margin-top: auto;
+}
