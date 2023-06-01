@@ -1,0 +1,74 @@
+/* stylelint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.classHeader {
+    position: flex;
+    font-family: 'Secular One', sans-serif;
+    background-color: #EB984E;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    width: 100%;
+}
+
+.header-link {
+    margin-right: 20px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header-link:hover {
+    color: #ffffff;
+}
+
+.logoutLink {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-right: 20px;
+}
+
+.logoutLink:hover {
+    color: #ffffff;
+}
+
+.header-user-seller {
+    display: flex;
+    text-align: right;
+    color: #333;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 600px) {
+    .classHeader {
+        width: 135%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-link {
+        margin-right: 0;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .header-link:last-child {
+        margin-bottom: 0;
+    }
+
+    .header-user-seller {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logoutLink {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
