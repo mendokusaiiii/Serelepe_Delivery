@@ -1,10 +1,11 @@
 import React from 'react';
-import Header from '../../components/Costumer/Header';
-import CardDetails from '../../components/Costumer/CardDetails';
+import Header from '../../components/Customer/Header';
+import CardDetails from '../../components/Customer/CardDetails';
+import '../../styles/cardDetailsPage/cardDetails.css';
 
 function OrderDetails() {
   return (
-    <div>
+    <div className="checkoutPage">
       <Header />
       <CardDetails />
     </div>
