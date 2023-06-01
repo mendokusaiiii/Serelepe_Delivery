@@ -1,14 +1,17 @@
 import React from 'react';
-import Header from '../../components/Costumer/Header';
-import CardList from '../../components/Costumer/CardList';
-import ShoppingCartTotal from '../../components/Costumer/ShoppingCartTotal';
+import Header from '../../components/Customer/Header';
+import CardList from '../../components/Customer/CardList';
+import ShoppingCartTotal from '../../components/Customer/ShoppingCartTotal';
 
 function ProductsPage() {
   return (
     <>
       <Header />
       <CardList />
-      <ShoppingCartTotal />
+      <footer>
+        <ShoppingCartTotal />
+      </footer>
+
     </>
   );
 }
