@@ -44,54 +44,45 @@ function OrderSeller() {
     const { date } = ords;
     const total = ords.value;
     return (
-      <div key={ saleId }>
-        <Link to={ `/seller/orders/${saleId}` }>
-          <p data-testid={ `${dataTestId}-${saleId}` }>
-            Order:
-            {' '}
-            { addingZero(saleId) }
-          </p>
-
-          <p data-testid={ `${dataTestIdStatus}-${saleId}` }>
-            Status:
-            {' '}
-            { status }
-          </p>
-
-          <p>
-            Date:
-            {' '}
-            <span
-              data-testid={ `${dataTestIdDate}-${saleId}` }
-            >
-              { dateConverter(date) }
-            </span>
-          </p>
-
-          <p data-tesid={ `${dataTestIdPrice}-${saleId}` }>
-            Total Price:
-            {' '}
-            { priceConverter(total) }
-          </p>
-
-          <p data-testid={ `${dataTestIdAddress}-${saleId}` }>
-            Address:
-            {' '}
-            { deliveryAddress }
-          </p>
-        </Link>
-      </div>
+      <tr key={ saleId }>
+        <td>
+          <Link
+            to={ `/seller/orders/${saleId}` }
+            data-testid={ `${dataTestId}-${saleId}` }
+          >
+            {addingZero(saleId)}
+          </Link>
+        </td>
+        <td data-testid={ `${dataTestIdStatus}-${saleId}` }>
+          {status}
+        </td>
+        <td>
+          <span data-testid={ `${dataTestIdDate}-${saleId}` }>
+            {dateConverter(date)}
+          </span>
+        </td>
+        <td data-tesid={ `${dataTestIdPrice}-${saleId}` }>
+          {priceConverter(total)}
+        </td>
+        <td data-testid={ `${dataTestIdAddress}-${saleId}` }>
+          {deliveryAddress}
+        </td>
+      </tr>
     );
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = readLocal('user');
-      const sellerDatabase = await fetchGetUserId({ userEmail: user.email });
-      const sellerId = sellerDatabase.data.userId.id;
-      const { data } = await fetchSalesByRoleId(user.token, { id: sellerId,
-        role: 'sellerId' });
-      setOrders(data);
+      try {
+        const user = readLocal('user');
+        const sellerDatabase = await fetchGetUserId({ userEmail: user.email });
+        const sellerId = sellerDatabase.data.userId.id;
+        const { data } = await fetchSalesByRoleId(user.token, {
+          id: sellerId, role: 'sellerId' });
+        setOrders(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
     fetchData();
   }, []);
@@ -118,27 +109,41 @@ function OrderSeller() {
         });
       });
 
-      return Object.values(groupedOrders).map((order) => {
-        const total = order.products.reduce(
-          (acc, product) => acc + product.price * product.quantity,
-          0,
-        );
-        return card({
-          saleId: order.id,
-          value: total.toFixed(2),
-          date: new Date(order.saleDate).toLocaleDateString(),
-          status: order.status,
-          deliveryAddress: order.deliveryAddress,
-        });
-      });
+      return (
+        <div className="shopping-cart-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Total Price</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.values(groupedOrders).map((order) => {
+                const total = order.products.reduce((
+                  acc,
+                  product,
+                ) => acc + product.price * product.quantity, 0);
+                return card({
+                  saleId: order.id,
+                  value: total.toFixed(2),
+                  date: new Date(order.saleDate).toLocaleDateString(),
+                  status: order.status,
+                  deliveryAddress: order.deliveryAddress,
+                });
+              })}
+            </tbody>
+          </table>
+        </div>
+
+      );
     }
   };
 
-  return (
-    <div>
-      { renderingCardOrders() }
-    </div>
-  );
+  return <div>{renderingCardOrders()}</div>;
 }
 
 export default OrderSeller;
