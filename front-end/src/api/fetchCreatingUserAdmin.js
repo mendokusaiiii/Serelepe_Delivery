@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-async function fetchChangeStatus(token, id) {
+async function fetchCreatingUser(token, obj) {
   const instance = axios.create({
     baseURL: 'http://localhost:3001',
   });
   try {
-    const result = await instance.put(`/sale/${id}`, {
-      headers: { Authorization: token },
-    });
+    const result = await instance.post(
+      '/admin',
+      obj,
+      { headers: { Authorization: token } },
+    );
     console.log(result);
     return result;
   } catch (error) {
@@ -15,4 +17,4 @@ async function fetchChangeStatus(token, id) {
   }
 }
 
-export default fetchChangeStatus;
+export default fetchCreatingUser;

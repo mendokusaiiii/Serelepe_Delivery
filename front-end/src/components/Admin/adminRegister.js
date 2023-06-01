@@ -1,15 +1,22 @@
-import React, { useContext, useState } from 'react';
-import fetchCreatingUser from '../../api/fetchCreatingUser';
-import stateGlobalContext from '../../context/stateGlobalContext';
-import { readLocal } from '../../helpers/localStorage';
+/* eslint-disable  */
+import React, { useContext, useState } from "react";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Button from "@mui/material/Button";
+import fetchCreatingUserAdmin from "../../api/fetchCreatingUserAdmin";
+import stateGlobalContext from "../../context/stateGlobalContext";
+import { readLocal } from "../../helpers/localStorage";
+import "../../styles/admin/adminRegister.css"
 
 function AdminRegister() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [isThereAnUser, setIsThereAnUser] = useState(false);
-  const [messageError, setMessageError] = useState('');
-  const [role, setRole] = useState('administrator');
+  const [messageError, setMessageError] = useState("");
+  const [role, setRole] = useState("administrator");
   const { arrayUsers, setArrayUsers } = useContext(stateGlobalContext);
 
   const checkingFormatt = () => {
@@ -19,96 +26,107 @@ function AdminRegister() {
     const isAValidEmail = emailRegex.test(email);
     const isAValidPassword = password.length >= minSize;
     const isAValidName = name.length >= minName;
-    return (!(isAValidEmail && isAValidPassword && isAValidName));
+    return !(isAValidEmail && isAValidPassword && isAValidName);
   };
 
-  const handleInputChange = async (target) => {
-    if (target.name === 'name') setName(target.value);
-    if (target.name === 'email') setEmail(target.value);
-    if (target.name === 'password') setPassword(target.value);
-    if (target.name === 'type') setRole(target.value);
+  const handleInputChange = async target => {
+    if (target.name === "name") setName(target.value);
+    if (target.name === "email") setEmail(target.value);
+    if (target.name === "password") setPassword(target.value);
+    if (target.name === "type") setRole(target.value);
   };
 
-  const handleClick = async (event) => {
+  const handleClick = async event => {
     event.preventDefault();
-    const user = readLocal('user');
-    const response = await fetchCreatingUser(user.token, { name, email, password, role });
+    const user = readLocal("user");
+    const response = await fetchCreatingUserAdmin(user.token, {
+      name,
+      email,
+      password,
+      role
+    });
     const statusCode = 409;
     if (response.status === statusCode) {
       setIsThereAnUser(true);
       return setMessageError(response.data.message);
     }
     setIsThereAnUser(false);
-    if (response.data.role !== 'administrator') {
+    if (response.data.role !== "administrator") {
       setArrayUsers([...arrayUsers, response.data]);
     }
   };
 
   return (
-    <div>
+    <div className="adminRegister" style={{textAlign:'center'}}>
       <form>
-        <h1>Register</h1>
-        <label htmlFor="Nome">
-          <span>Name</span>
-          <input
+        <h3>Register</h3>
+        <div>
+          <TextField
             id="name"
             type="text"
-            onChange={ ({ target }) => handleInputChange(target) }
+            onChange={({ target }) => handleInputChange(target)}
             data-testid="admin_manage__input-name"
             name="name"
             placeholder="Name and Surname"
           />
-        </label>
-        <label htmlFor="email">
-          <input
+        </div>
+        <div>
+          <TextField
             type="email"
             id="email"
             data-testid="admin_manage__input-email"
             name="email"
-            onChange={ ({ target }) => handleInputChange(target) }
+            onChange={({ target }) => handleInputChange(target)}
             placeholder="Email"
           />
-        </label>
-        <label htmlFor="password">
-          <span>Password</span>
-          <input
+        </div>
+        <div>
+          <TextField
             id="password"
             type="password"
-            onChange={ ({ target }) => handleInputChange(target) }
+            onChange={({ target }) => handleInputChange(target)}
             data-testid="admin_manage__input-password"
             name="password"
             placeholder="Password"
           />
-        </label>
-        <label htmlFor="type">
+        </div>
 
-          <select
-            name="type"
-            data-testid="admin_manage__select-role"
-            value={ role }
-            onChange={ ({ target }) => handleInputChange(target) }
-          >
-            <option value="administrator">Administrator</option>
-            <option value="customer">Customer</option>
-            <option value="seller">Seller</option>
-          </select>
-        </label>
-        <button
-          disabled={ checkingFormatt() }
-          type="submit"
-          className="login-btn"
-          onClick={ (event) => handleClick(event) }
-          data-testid="admin_manage__button-register"
-        >
-          Register
-        </button>
+        <div>
+          <FormControl>
+            <Select
+              name="type"
+              data-testid="admin_manage__select-role"
+              value={role}
+              className="nativeSelect"
+              onChange={({ target }) => handleInputChange(target)}
+            >
+              <MenuItem value="administrator">Administrator</MenuItem>
+              <MenuItem value="customer">Customer</MenuItem>
+              <MenuItem value="seller">Seller</MenuItem>
+            </Select>
+            <Button
+              style={{
+                backgroundColor: checkingFormatt() ? "grey" : "#dd571c",
+                margin: "5px",
+                color: "white",
+                display: "flex"
+              }}
+              disabled={checkingFormatt()}
+              type="submit"
+              className="login-btn"
+              onClick={event => handleClick(event)}
+              data-testid="admin_manage__button-register"
+            >
+              Register
+            </Button>
+          </FormControl>
+        </div>
       </form>
-      { isThereAnUser
-            && (
-              <span data-testid="admin_manage__element-invalid-register">
-                {messageError}
-              </span>
-            )}
+      {isThereAnUser && (
+        <span data-testid="admin_manage__element-invalid-register">
+          {messageError}
+        </span>
+      )}
     </div>
   );
 }

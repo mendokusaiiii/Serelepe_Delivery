@@ -5,7 +5,7 @@ import LoginPage from './pages/login/login';
 import HomePage from './pages/home/home';
 import RegisterPage from './pages/register/register';
 import ProductsPage from './pages/products/products';
-import CheckoutPage from './pages/checkout/checkout';
+import CheckoutPage from './pages/checkout/checkoutPage';
 import OrdersPage from './pages/ordersCostumer/orders';
 import OrderDetails from './pages/ordersCostumer/orderDetails';
 import stateGlobalContext from './context/stateGlobalContext';
