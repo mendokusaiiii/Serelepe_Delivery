@@ -1,0 +1,102 @@
+/* stylelint-disable */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+
+.checkoutPage::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FCF3CF;
+    opacity: 0.8;
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+.shopping-cart-table {
+    background-color: #FCF3CF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+
+}
+
+.shopping-cart-table h3 {
+    font-family: 'Secular One', sans-serif;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 60px;
+}
+
+.shopping-cart-table h2 {
+    font-family: 'Secular One', sans-serif;
+    text-align: center;
+    font-size: 40px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.shopping-cart-table table {
+    font-family: 'Secular One', sans-serif;
+    table-layout: auto;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.shopping-cart-table th,
+.shopping-cart-table td {
+    text-align: center;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.shopping-cart-table th {
+    font-size: 20px;
+}
+
+.shopping-cart-table p {
+    font-family: 'Secular One', sans-serif;
+    font-size: 20px;
+}
+
+.shopping-cart-table td button {
+    padding: 5px 10px;
+    background-color: #eb974e00;
+    color: rgb(8, 8, 8);
+    cursor: pointer;
+}
+
+.shopping-cart-table td button:hover {
+    background-color: #EB984E;
+}
+
+.shopping-cart-table button {
+    margin: 10px;
+    padding: 15px;
+}
+
+
+
+
+.shopping-cart-table label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.shopping-cart-table select {
+    padding: 16.5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
