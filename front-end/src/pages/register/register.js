@@ -1,7 +1,14 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchCreatingUser from '../../api/fetchCreatingUser';
 import { saveLocal } from '../../helpers/localStorage';
+import '../../styles/loginPage/login.css';
+import logoTransparent from "../../images/logoTransparent.png";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Link from '@mui/material/Link';
 
 function RegisterPage() {
   const history = useHistory();
@@ -44,57 +51,85 @@ function RegisterPage() {
   };
 
   return (
-    <div className="Login">
-      <form className="login-form">
-        <h1>Register</h1>
-        <label htmlFor="Nome">
-          <span>Name</span>
-          <input
-            id="name"
-            type="text"
-            onChange={ ({ target }) => handleInputChange(target) }
-            data-testid="common_register__input-name"
-            name="name"
-            placeholder="Name"
-          />
-        </label>
-        <label htmlFor="email">
-          <input
-            type="text"
-            id="email"
-            data-testid="common_register__input-email"
-            name="email"
-            onChange={ ({ target }) => handleInputChange(target) }
-            placeholder="Email"
-          />
-        </label>
-        <label htmlFor="password">
-          <span>Password</span>
-          <input
-            id="password"
-            type="password"
-            onChange={ ({ target }) => handleInputChange(target) }
-            data-testid="common_register__input-password"
-            name="password"
-          />
-        </label>
-        <button
-          disabled={ checkingFormatt() }
-          type="submit"
-          className="login-btn"
-          onClick={ (event) => handleClick(event) }
-          data-testid="common_register__button-register"
-        >
-          Register
-        </button>
-      </form>
-      { isThereAnUser
+    <html className="classHtml" lang="en">
+      <div className="divLogin">
+        <div className="divLogoSerelepe">
+          <img draggable="false" className="logoSerelepe" src={ logoTransparent } alt="Logo" />
+        </div>
+        <form className="login-form">
+        <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              "& > :not(style)": { m: 1 }
+            }}
+          >
+          <h1>Create Account</h1>
+     
+
+            <TextField
+            className="inputField"
+              id="name"
+              type="text"
+              onChange={ ({ target }) => handleInputChange(target) }
+              data-testid="common_register__input-name"
+              name="name"
+              placeholder="Name"
+              x={{ width: "50%" }}
+            />
+ 
+    
+            <TextField
+            className="inputField"
+              type="text"
+              id="email"
+              data-testid="common_register__input-email"
+              name="email"
+              onChange={ ({ target }) => handleInputChange(target) }
+              placeholder="Email"
+              x={{ width: "50%" }}
+            />
+
+            <TextField
+            className="inputField"
+              id="password"
+              type="password"
+              placeholder='Password'
+              onChange={ ({ target }) => handleInputChange(target) }
+              data-testid="common_register__input-password"
+              name="password"
+              x={{ width: "50%" }}
+            />
+          
+          <Button
+            disabled={ checkingFormatt() }
+            style={{
+              backgroundColor: checkingFormatt() ? "grey" : "#dd571c",
+              margin: "5px",
+              color: "white",
+              display: "flex",
+              width: "52%",
+            }}
+            type="submit"
+            className="login-btn"
+            onClick={ (event) => handleClick(event) }
+            data-testid="common_register__Button-register"
+          >
+            Register
+          </Button>
+          <Link hidden={checkingFormatt() ? false : true} style={{marginLeft: '22%'}} href="/login">
+        Sign In
+      </Link>
+          </Box>
+        </form>
+        { isThereAnUser
             && (
               <span data-testid="common_register__element-invalid_register">
                 {messageError}
               </span>
             )}
-    </div>
+      </div>
+    </html>
   );
 }
 
