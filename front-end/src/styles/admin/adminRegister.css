@@ -1,0 +1,137 @@
+/* stylelint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.checkoutPage::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FCF3CF;
+    opacity: 0.8;
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+.adminRegister {
+    font-family: 'Secular One', sans-serif;
+    background-color: #FCF3CF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.adminRegister h3 {
+    font-family: 'Secular One', sans-serif;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 5vw;
+
+}
+
+.adminRegister h2 {
+    font-family: 'Secular One', sans-serif;
+    text-align: center;
+    font-size: 3.5vw;
+
+    margin: 5px;
+    padding: 5px;
+}
+
+.adminRegister p {
+    font-family: 'Secular One', sans-serif;
+    font-size: 2vw;
+}
+
+.adminRegister td button {
+    padding: 5px 10px;
+    background-color: #eb974e00;
+    color: rgb(8, 8, 8);
+    cursor: pointer;
+}
+
+.adminRegister td button:hover {
+    background-color: #EB984E;
+}
+
+.adminRegister button {
+    margin: 10px;
+    padding: 15px;
+}
+
+.adminRegister span[data-testid="customer_checkout__element-order-total-price"] {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.adminRegister label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.nativeSelect {
+    border-bottom: none;
+}
+
+.adminRegister select {
+    font-family: 'Secular One', sans-serif;
+    padding: 1.5vw;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.adminRegister div {
+    font-family: 'Secular One', sans-serif;
+    padding: 2px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .adminRegister form {
+        text-align: center;
+    }
+
+    .adminRegister input {
+        width: 80%;
+        height: 10vh;
+        text-align: center;
+    }
+
+    .adminRegister div {
+        text-align: center;
+    }
+
+    .adminRegister h3 {
+        font-size: 8vw;
+    }
+
+    .adminRegister h2 {
+        font-size: 6vw;
+
+    }
+
+    .adminRegister p {
+        font-size: 3vw;
+
+    }
+
+    .adminRegister button {
+        padding: 8px 12px;
+
+        font-size: 4vw;
+
+    }
+
+    .adminRegister select {
+        padding: 3vw;
+
+    }
+}
