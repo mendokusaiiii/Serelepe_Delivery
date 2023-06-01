@@ -1,0 +1,43 @@
+/* stylelint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+
+    justify-content: center;
+    padding: 10px;
+}
+
+.drinkTittle {
+    font-family: 'Secular One', sans-serif;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 60px;
+
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    width: 100%;
+    text-align: right;
+}
+
+
+@media (max-width: 768px) {
+    footer {
+        position: fixed;
+        margin-right: 30%;
+        bottom: 0;
+        right: 0;
+        padding: 20px;
+        width: 100%;
+        text-align: right;
+    }
+
+}
