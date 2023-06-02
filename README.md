@@ -11,6 +11,7 @@ Todos os usuários têm acesso através do login com diferentes permissões. O a
 ## Sumário
 
  - [Sobre o projeto](#sobre-o-projeto)
+ - [Demo](#demo)
  - [Front-End](#front-end)
  - [Back-End](#back-end)
  - [Instalação](#instalação)
@@ -34,6 +35,13 @@ Como seu antigo sistema, que era um conjunto de planilhas, já não atende a nec
 - 🗣 👥 Fazer a comunicação entre clientes e pessoas vendedoras: a pessoa cliente faz o pedido via "carrinho de compras" e a pessoa vendedora aprova, prepara e envia esse pedido. Quando o produto é recebido por quem comprou, essa pessoa marca o pedido como "recebido". Ambos devem possuir detalhes sobre seus pedidos.
 
 - 🏍 Se a pessoa cliente faz o pedido, o mesmo deve aparecer para a pessoa vendedora em seu dash de pedidos após a atualização da página. A pessoa cliente, por sua vez, deve ter as informações sobre seu pedido quando sua página for atualizada, ou seja, ter informações se o pedido está sendo preparado ou se já saiu pra entrega.
+
+## Demo
+![image (1)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/c3dfd94e-0df6-449f-9acb-a1ca51b9b80a)
+![image (2)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/7c43c975-b6b0-4d9c-99bf-9ce2b52b085e)
+![image (3)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/316ac30d-a6c0-475b-8f14-b4e607f92ed6)
+![image (4)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/cf67edf4-9923-4c7a-b939-160cf942d5de)
+![image (5)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/00664fe0-9672-40a4-b54a-242073016456)
 ## Front-End
 
 O Front-End foi desenvolvido com as seguintes ferramentas:
@@ -659,6 +667,11 @@ Sendo eles:
     - A criação e associação de tabelas usando models do sequelize;
     - A construção de uma API REST com endpoints para consumir os models criados;
     - A construção de um CRUD com NodeJS, utilizando ORM;
+    - A utilização de React
+    - A utilização de React-Hooks e Context-API
+    - A estilização com Material-UI
+    - A organização e estruturação de software
+    - A cobertura de testes. Tanto testes unitários e de integração robusta e com alta cobertura.
 
 ##### Softskills:
     - Trabalho em grupo
