@@ -1,6 +1,7 @@
 
 # 🐿 Serelepe Delivery
 
+![image (1)](https://github.com/mendokusaiiii/Serelepe_Delivery/assets/102118032/c3dfd94e-0df6-449f-9acb-a1ca51b9b80a)
 Este projeto é um aplicativo de delivery desenvolvido para os clientes, funcionários e administradores de uma empresa. Ele permite vendas de produtos, registro de novos usuários, acompanhamento de pedidos e gerenciamento de usuários e pedidos.
 
 Todos os usuários têm acesso através do login com diferentes permissões. O aplicativo valida o tipo de usuário a que a conta pertence usando o Token JWT. Além disso, o vendedor só pode ver os pedidos relacionados ao seu nome.
